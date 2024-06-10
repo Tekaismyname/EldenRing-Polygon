@@ -9,11 +9,18 @@ namespace TK {
         // THINK ABOUT THE GOAL IN STEP
         // 1. FIND THE WAY TO READ THE VALUE OF A JOY STICK
         // 2. MOVE THE CHARACTER BASED ON THOSE VALUES
-
+        [Header("PLAYER MOVEMENT INPUT")]
         PlayerControls playerControls;
         [SerializeField] Vector2 movementInput;
-        [SerializeField] float horizontalInput;
-        [SerializeField] float verticalInput;
+        public float horizontalInput;
+        public float verticalInput;
+
+        [Header("CAMERA MOVEMENT INPUT")]
+        [SerializeField] Vector2 cameraInput;
+        public float cameraHorizontalInput;
+        public float cameraVerticalInput;
+
+
         public float moveAmount;
         private void Awake()
         {
@@ -57,6 +64,7 @@ namespace TK {
                 playerControls = new PlayerControls();
 
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+                playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             }
             playerControls.Enable();
         }
@@ -70,6 +78,8 @@ namespace TK {
         private void Update()
         {
             HandleMovementInput();
+
+            HandleCameraMovementInput();
         }
         private void HandleMovementInput()
         {
@@ -90,15 +100,6 @@ namespace TK {
             }
         }
 
-        public float GetVerticalInput()
-        {
-            return verticalInput;
-        }
-
-        public float GetHorizontal()
-        {
-            return horizontalInput;
-        }
         // IF WE MINUMIZE OR LOWER THE WINDOWN, STOP ADJUSTING  INPUTS
         private void OnApplicationFocus(bool focus)
         {
@@ -113,6 +114,12 @@ namespace TK {
                     playerControls.Disable();
                 }
             }
+        }
+
+        private void HandleCameraMovementInput()
+        {
+            cameraVerticalInput = cameraInput.y;
+            cameraHorizontalInput = cameraInput.x;
         }
     }
 }

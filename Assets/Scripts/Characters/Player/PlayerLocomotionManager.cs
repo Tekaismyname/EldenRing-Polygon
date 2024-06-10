@@ -32,8 +32,8 @@ namespace Tk
 
         private void GetVerticalAndHorizontalInputs()
         {
-            verticalMovement = PlayerInputManager.instance.GetVerticalInput();
-            horizontalMovement = PlayerInputManager.instance.GetHorizontal();
+            verticalMovement = PlayerInputManager.instance.verticalInput;
+            horizontalMovement = PlayerInputManager.instance.horizontalInput;
 
             //CLAMP THE MOVEMENTS
         } 

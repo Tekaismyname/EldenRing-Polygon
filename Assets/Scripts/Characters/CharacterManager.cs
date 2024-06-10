@@ -37,6 +37,11 @@ namespace TK
                     , characterNetworkManager.networkRorationSmoothTime);
             }
         }
+
+        protected virtual void LateUpdate()
+        {
+
+        }
     }
 }
 

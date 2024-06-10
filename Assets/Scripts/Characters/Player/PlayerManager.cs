@@ -28,5 +28,27 @@ namespace TK
             // HANDLE ALL CHARACTER MOVEMENT
             playerLocomotionManager.HandleAllMovement();
         }
+
+        protected override void LateUpdate()
+        {
+            if (!IsOwner)
+            {
+                return;
+            }
+            base.LateUpdate();
+
+            PlayerCamera.instance.HandleAllCameraActions();
+        }
+
+        // THIS FUNCTION WILL CALL WHEN OBJECT SPAWN AS NETWORK
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            // IF THIS THE PLAYER OBJECT OWNED BY THIS CLIENT
+            if(IsOwner)
+            {
+                PlayerCamera.instance.player = this;
+            }
+        }
     }
 }
