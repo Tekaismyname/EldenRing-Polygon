@@ -33,6 +33,8 @@ namespace TK
                 startGameAsClient = false;
                 //WE MUST FIRST SHUT DOWN, BECAUSE WE HAVE STARTED AS A HOST DURING THE TITLE SCREEN
                 NetworkManager.Singleton.Shutdown();
+
+                
                 //WE THEN RESTART, AS A CLIENT
                 NetworkManager.Singleton.StartClient();
             }

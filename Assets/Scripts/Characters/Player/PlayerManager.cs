@@ -19,6 +19,12 @@ namespace TK
         protected override void Update()
         {
             base.Update();
+            // IF WE DO NOT OWNER THIS GAMEOBJECT, WE DO NOT CONTROL OR EDIT IT
+            if (!IsOwner)
+            {
+                return;
+            }
+
             // HANDLE ALL CHARACTER MOVEMENT
             playerLocomotionManager.HandleAllMovement();
         }

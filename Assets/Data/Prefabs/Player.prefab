@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8368851571883732882}
   - component: {fileID: 8368851571883732589}
   - component: {fileID: 1802506658794840947}
+  - component: {fileID: 4230099613792391007}
   - component: {fileID: 2955599989015371091}
   - component: {fileID: -991179467859690038}
   m_Layer: 0
@@ -70,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 97417364
+  GlobalObjectIdHash: 3173605653
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -92,6 +93,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
+--- !u!114 &4230099613792391007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711452598916633406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53e0d34e472bd18419d9add44502f2ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkPositionVelocity: {x: 0, y: 0, z: 0}
+  networkPositionSmoothTime: 0.1
 --- !u!114 &2955599989015371091
 MonoBehaviour:
   m_ObjectHideFlags: 0

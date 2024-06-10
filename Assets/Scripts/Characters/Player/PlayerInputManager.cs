@@ -99,5 +99,20 @@ namespace TK {
         {
             return horizontalInput;
         }
+        // IF WE MINUMIZE OR LOWER THE WINDOWN, STOP ADJUSTING  INPUTS
+        private void OnApplicationFocus(bool focus)
+        {
+            if (enabled)
+            {
+                if (focus)
+                {
+                    playerControls.Enable();
+                }
+                else
+                {
+                    playerControls.Disable();
+                }
+            }
+        }
     }
 }

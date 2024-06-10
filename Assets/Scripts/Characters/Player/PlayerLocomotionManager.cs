@@ -14,6 +14,7 @@ namespace Tk
         public float moveAmount;
         [SerializeField] float walkingSpeed = 2;
         [SerializeField] float runningSpeed = 5;
+        [SerializeField] float rotationSpeed = 15;
         private Vector3 moveDirection;
         protected override void Awake()
         {
@@ -25,6 +26,7 @@ namespace Tk
         {
             //  GROUNDED MOVEMENT
             HandleGroundMovement();
+            HandleRotation();
             // AERIAL MOVEMENT
         }
 
@@ -54,6 +56,23 @@ namespace Tk
                 //  MOVE AT WALKING SPEED
                 player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
             }
+        }
+        private void HandleRotation()
+        {
+            Vector3 targerRotationDirection = Vector3.zero;
+            targerRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+            targerRotationDirection = targerRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+            targerRotationDirection.Normalize();
+            targerRotationDirection.y = 0;
+
+            if(targerRotationDirection == Vector3.zero )
+            {
+                targerRotationDirection = transform.forward;
+            }
+
+            Quaternion newRotation = Quaternion.LookRotation(targerRotationDirection);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = targetRotation;
         }
      }   
 }
