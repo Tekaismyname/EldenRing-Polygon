@@ -1544,8 +1544,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5357812530460682960, guid: 506474bf4bc7eeb4e8bd705ff59b66be,
         type: 3}
+      propertyPath: m_ProtocolType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357812530460682960, guid: 506474bf4bc7eeb4e8bd705ff59b66be,
+        type: 3}
+      propertyPath: ConnectionData.Port
+      value: 7777
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357812530460682960, guid: 506474bf4bc7eeb4e8bd705ff59b66be,
+        type: 3}
       propertyPath: ConnectionData.ServerListenAddress
-      value: 127.0.0.1
+      value: 0.0.0.0
       objectReference: {fileID: 0}
     - target: {fileID: 5357812530460682961, guid: 506474bf4bc7eeb4e8bd705ff59b66be,
         type: 3}
