@@ -6,11 +6,16 @@ namespace TK {
     public class PlayerInputManager : MonoBehaviour
     {
         public static PlayerInputManager instance;
+
+        public PlayerManager player;
+        public PlayerControls playerControls;
         // THINK ABOUT THE GOAL IN STEP
         // 1. FIND THE WAY TO READ THE VALUE OF A JOY STICK
         // 2. MOVE THE CHARACTER BASED ON THOSE VALUES
+
+
         [Header("PLAYER MOVEMENT INPUT")]
-        PlayerControls playerControls;
+        
         [SerializeField] Vector2 movementInput;
         public float horizontalInput;
         public float verticalInput;
@@ -98,6 +103,17 @@ namespace TK {
             {
                 moveAmount = 1;
             }
+
+            // WHY DO WE PASS 0 ON THE HORIZONTAL? BECAUSE WE ONLY WANT NON-STARFING MOVEMENT
+            // WE USE THE HORIZONTAL WHEN WE ARE STRAFING OR LOCKED ON
+
+
+            if (player == null)
+                return;
+            // IF WE ARE NOT LOCKED ON, ONLY USE MOVE AMOUNT
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+
+            // IF WE ARE LOCKED ON PASS THE HORIZONTAL MOVEMENT AS WELL
         }
 
         // IF WE MINUMIZE OR LOWER THE WINDOWN, STOP ADJUSTING  INPUTS

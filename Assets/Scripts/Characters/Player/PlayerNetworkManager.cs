@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TK
 {
-    public class PlayerNetowrkManager : CharacterNetworkManager
+    public class PlayerNetworkManager : CharacterNetworkManager
     {
 
     }

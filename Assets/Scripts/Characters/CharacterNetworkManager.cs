@@ -14,5 +14,11 @@ namespace TK
         public Vector3 networkPositionVelocity;
         public float networkPositionSmoothTime = 0.1f;
         public float networkRorationSmoothTime = 0.1f;
+
+        [Header("Animator")]
+        public NetworkVariable<float> horizontalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<float> moveAmout = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     }
 }

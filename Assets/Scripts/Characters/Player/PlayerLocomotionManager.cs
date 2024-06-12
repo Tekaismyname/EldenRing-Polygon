@@ -21,7 +21,29 @@ namespace Tk
             base.Awake();
             player = gameObject.GetComponent<PlayerManager>();  
         }
-    
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (player.IsOwner)
+            {
+                player.characterNetworkManager.verticalMovement.Value = verticalMovement;
+                player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
+                player.characterNetworkManager.moveAmout.Value = moveAmount;
+            }
+            else
+            {
+                verticalMovement = player.characterNetworkManager.verticalMovement.Value;
+                horizontalMovement = player.characterNetworkManager.horizontalMovement.Value;
+                moveAmount = player.characterNetworkManager.moveAmout.Value;
+
+                // IF NOT CLOCKED ON, PASS MOVE AMOUT
+                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+
+                // IF LOCKED ON, PASS HORIZONTAL AND VERTICAL
+            }
+        }
         public void HandleAllMovement()
         {
             //  GROUNDED MOVEMENT
@@ -30,16 +52,16 @@ namespace Tk
             // AERIAL MOVEMENT
         }
 
-        private void GetVerticalAndHorizontalInputs()
+        private void GetMovementValues()
         {
             verticalMovement = PlayerInputManager.instance.verticalInput;
             horizontalMovement = PlayerInputManager.instance.horizontalInput;
-
+            moveAmount = PlayerInputManager.instance.moveAmount;
             //CLAMP THE MOVEMENTS
         } 
         private void HandleGroundMovement()
         {
-            GetVerticalAndHorizontalInputs();
+            GetMovementValues();
             //  OUR MOVE DIRECTION IS BASED ON OUR CAMERA FACING PERSPECTIVE & OUR MOVEMENT INPUTS
             moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
             moveDirection += PlayerCamera.instance.transform.right * horizontalMovement;
