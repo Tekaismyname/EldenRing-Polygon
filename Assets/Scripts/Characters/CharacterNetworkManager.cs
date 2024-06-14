@@ -7,6 +7,8 @@ namespace TK
 {
     public class CharacterNetworkManager : NetworkBehaviour
     {
+        CharacterManager character;
+
         [Header("Position")]
         // ONLY OWNER CAN EDIT POSITION, EVERYONE WHO NOT OWNER CAN READ ONLY
         public NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -20,5 +22,38 @@ namespace TK
         public NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> moveAmout = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+
+        protected virtual void Awake()
+        {
+            character = GetComponent<CharacterManager>();
+        }
+        // A SERVER RPC IS A FUNCTION CALLED A CLIENT, TO THE SERVER ( IN OUR CASE THE HOST )
+        [ServerRpc]
+        public void NotifyTheSeverOfActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
+        {
+            // IF THIS CHARACTER IS THE HOST/SERVER, THEN ACTIVATE THE CLIENT RPC
+            if(IsServer)
+            {
+                PlayActionAnimationForAllClientClientRpc(clientID, animationID, applyRootMotion);
+            }
+        }
+
+        // A CLIENT RPC IS SENT TO ALL CLIENTS PRESENT, FROM THE SERVER 
+        [ClientRpc]
+        public void PlayActionAnimationForAllClientClientRpc(ulong clientID, string animationID, bool applyRootMotion)
+        {
+            // WE MAKE SURE TO NOT RUN THE FUNCTION ON THE CHARATER WHO SENT IT ( SO WE DONT PLAY THE ANIMATION TWICE)
+            if(clientID != NetworkManager.Singleton.LocalClientId)
+            {
+                PerformActionAnimationFromServer(animationID, applyRootMotion);
+            }
+        }
+
+        private void PerformActionAnimationFromServer(string animationID, bool applyRootMotion)
+        {
+            character.applyRootMotion = applyRootMotion;
+            character.animator.CrossFade(animationID, 0.2f);
+
+        }
     }
 }

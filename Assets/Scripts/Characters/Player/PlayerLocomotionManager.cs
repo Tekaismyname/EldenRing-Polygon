@@ -9,13 +9,21 @@ namespace Tk
     public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         PlayerManager player; 
-        public float horizontalMovement;
-        public float verticalMovement;
-        public float moveAmount;
+        [HideInInspector] public float horizontalMovement;
+        [HideInInspector] public float verticalMovement;
+        [HideInInspector] public float moveAmount;
+
+
+        [Header("Movement Settings")]
+        private Vector3 moveDirection;
+        private Vector3 targetRotationDirection;
         [SerializeField] float walkingSpeed = 2;
         [SerializeField] float runningSpeed = 5;
         [SerializeField] float rotationSpeed = 15;
-        private Vector3 moveDirection;
+
+
+        [Header("Dodge")]
+        private Vector3 rollDirection;
         protected override void Awake()
         {
             base.Awake();
@@ -46,6 +54,7 @@ namespace Tk
         }
         public void HandleAllMovement()
         {
+            
             //  GROUNDED MOVEMENT
             HandleGroundMovement();
             HandleRotation();
@@ -61,6 +70,7 @@ namespace Tk
         } 
         private void HandleGroundMovement()
         {
+            if (!player.canMove) return;
             GetMovementValues();
             //  OUR MOVE DIRECTION IS BASED ON OUR CAMERA FACING PERSPECTIVE & OUR MOVEMENT INPUTS
             moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
@@ -81,20 +91,49 @@ namespace Tk
         }
         private void HandleRotation()
         {
-            Vector3 targerRotationDirection = Vector3.zero;
-            targerRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-            targerRotationDirection = targerRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-            targerRotationDirection.Normalize();
-            targerRotationDirection.y = 0;
+            if (!player.canRotate) return;
+            targetRotationDirection = Vector3.zero;
+            targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+            targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+            targetRotationDirection.Normalize();
+            targetRotationDirection.y = 0;
 
-            if(targerRotationDirection == Vector3.zero )
+            if(targetRotationDirection == Vector3.zero )
             {
-                targerRotationDirection = transform.forward;
+                targetRotationDirection = transform.forward;
             }
 
-            Quaternion newRotation = Quaternion.LookRotation(targerRotationDirection);
+            Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
+        }
+
+        public void AttempToPerformDodge()
+        {
+            if (player.isPerformingAction) return;
+            // IF WE ARE MOVING WHEN WE ATTEMPT TO DODGE, WE PERFORM A ROLL
+            if(PlayerInputManager.instance.moveAmount > 0)
+            {
+                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+                rollDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+                // show direction of player before his roll
+                Debug.DrawLine(transform.position, rollDirection, Color.red);
+                rollDirection.y = 0;
+                rollDirection.Normalize();
+
+                Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
+                player.transform.rotation = playerRotation;
+
+                //PERFORM A ROLL ANIMATION
+                player.playerAnimatorManager.PlayerTargetActionAnimation("Roll_Forward_01", true);
+            }
+            // IF WE ARE STATIONARY, WE PERFORM A BACKSTEP
+            else
+            {
+                // PERFORM A BACKSTEP ANIMATION
+                player.playerAnimatorManager.PlayerTargetActionAnimation("Back_Step_01", true);
+            }
+            
         }
      }   
 }

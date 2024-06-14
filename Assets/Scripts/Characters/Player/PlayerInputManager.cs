@@ -13,20 +13,20 @@ namespace TK {
         // 1. FIND THE WAY TO READ THE VALUE OF A JOY STICK
         // 2. MOVE THE CHARACTER BASED ON THOSE VALUES
 
-
-        [Header("PLAYER MOVEMENT INPUT")]
-        
-        [SerializeField] Vector2 movementInput;
-        public float horizontalInput;
-        public float verticalInput;
-
         [Header("CAMERA MOVEMENT INPUT")]
         [SerializeField] Vector2 cameraInput;
         public float cameraHorizontalInput;
         public float cameraVerticalInput;
 
-
+        [Header("PLAYER MOVEMENT INPUT")]
+        [SerializeField] Vector2 movementInput;
+        public float horizontalInput;
+        public float verticalInput;
         public float moveAmount;
+
+        [Header("PLAYER ACTION INPUT")]
+        [SerializeField] bool dodgeInput = false;
+
         private void Awake()
         {
             if(instance == null)
@@ -47,6 +47,10 @@ namespace TK {
             SceneManager.activeSceneChanged += OnSceneChange;
 
             instance.enabled = false;    
+        }
+        private void Update()
+        {
+            HandleAllInputs();
         }
         private void OnSceneChange(Scene oldScene, Scene newScene)
         {
@@ -70,6 +74,7 @@ namespace TK {
 
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
+                playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             }
             playerControls.Enable();
         }
@@ -80,13 +85,30 @@ namespace TK {
             SceneManager.activeSceneChanged -= OnSceneChange;
         }
 
-        private void Update()
+        // IF WE MINUMIZE OR LOWER THE WINDOWN, STOP ADJUSTING  INPUTS
+        private void OnApplicationFocus(bool focus)
         {
-            HandleMovementInput();
-
-            HandleCameraMovementInput();
+            if (enabled)
+            {
+                if (focus)
+                {
+                    playerControls.Enable();
+                }
+                else
+                {
+                    playerControls.Disable();
+                }
+            }
         }
-        private void HandleMovementInput()
+
+        private void HandleAllInputs()
+        {
+            HandlePlayerMovementInput();
+            HandleCameraMovementInput();
+            HandleDodgeInput();
+        }
+        //  MOVEMENT
+        private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
             horizontalInput = movementInput.x;
@@ -115,27 +137,22 @@ namespace TK {
 
             // IF WE ARE LOCKED ON PASS THE HORIZONTAL MOVEMENT AS WELL
         }
-
-        // IF WE MINUMIZE OR LOWER THE WINDOWN, STOP ADJUSTING  INPUTS
-        private void OnApplicationFocus(bool focus)
-        {
-            if (enabled)
-            {
-                if (focus)
-                {
-                    playerControls.Enable();
-                }
-                else
-                {
-                    playerControls.Disable();
-                }
-            }
-        }
-
         private void HandleCameraMovementInput()
         {
             cameraVerticalInput = cameraInput.y;
             cameraHorizontalInput = cameraInput.x;
+        }
+
+        // ACTION
+        private void HandleDodgeInput()
+        {
+            if(dodgeInput)
+            {
+                dodgeInput = false;
+                // FUTURE NOTE: RETURN IF (DO NOTHING) IF MENU OR UI WINDOW IS OPEN
+                //PERFORM A DODGE
+                player.playerLocomotionManager.AttempToPerformDodge();
+            }
         }
     }
 }
