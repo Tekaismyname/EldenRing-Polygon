@@ -20,7 +20,7 @@ namespace Tk
         [SerializeField] float walkingSpeed = 2;
         [SerializeField] float runningSpeed = 5;
         [SerializeField] float rotationSpeed = 15;
-
+        [SerializeField] float sprintingSpeed = 6.5f;
 
         [Header("Dodge")]
         private Vector3 rollDirection;
@@ -47,7 +47,7 @@ namespace Tk
                 moveAmount = player.characterNetworkManager.moveAmout.Value;
 
                 // IF NOT CLOCKED ON, PASS MOVE AMOUT
-                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
 
                 // IF LOCKED ON, PASS HORIZONTAL AND VERTICAL
             }
@@ -78,16 +78,24 @@ namespace Tk
             moveDirection.Normalize();
             moveDirection.y = 0;
 
-            if(PlayerInputManager.instance.moveAmount > 0.5f)
+            if(player.playerNetworkManager.isSprinting.Value)
             {
-                //  MOVE AT RUNNING SPEED
-                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
             }
-            else if(PlayerInputManager.instance.moveAmount <= 0.5f ) 
+            else
             {
-                //  MOVE AT WALKING SPEED
-                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                if (PlayerInputManager.instance.moveAmount > 0.5f)
+                {
+                    //  MOVE AT RUNNING SPEED
+                    player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                }
+                else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+                {
+                    //  MOVE AT WALKING SPEED
+                    player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                }
             }
+  
         }
         private void HandleRotation()
         {
@@ -107,7 +115,27 @@ namespace Tk
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
         }
+        public void HandleSprinting()
+        {
+            if (player.isPerformingAction)
+            {
+                // SET SPRINTING TO FALSE
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
+            // IF WE ARE OUT THE STAMINA, SET SPRINTING TO FALSE
 
+            // IF WE ARE MOVING SET SPRINTING TO TRUE
+            if(moveAmount >= 0.5)
+            {
+                player.playerNetworkManager.isSprinting.Value = true;
+            }
+            // // IF WE ARE STATIONARY/MOVING SLOWLY SET SPRINTING TO FALSE
+            else
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
+            
+        }
         public void AttempToPerformDodge()
         {
             if (player.isPerformingAction) return;

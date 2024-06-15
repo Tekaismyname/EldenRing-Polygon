@@ -26,6 +26,8 @@ namespace TK {
 
         [Header("PLAYER ACTION INPUT")]
         [SerializeField] bool dodgeInput = false;
+        [SerializeField] bool sprintInput = false;
+
 
         private void Awake()
         {
@@ -75,6 +77,11 @@ namespace TK {
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+
+                // HOLDING THE INPUT, SETS THE BOOL TO TRUE
+                playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
+                // RELEASING THE INPUT, SETS THE BOOL TO FALSE
+                playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
             }
             playerControls.Enable();
         }
@@ -106,6 +113,7 @@ namespace TK {
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
+            HandleSprinting();
         }
         //  MOVEMENT
         private void HandlePlayerMovementInput()
@@ -133,7 +141,7 @@ namespace TK {
             if (player == null)
                 return;
             // IF WE ARE NOT LOCKED ON, ONLY USE MOVE AMOUNT
-            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
 
             // IF WE ARE LOCKED ON PASS THE HORIZONTAL MOVEMENT AS WELL
         }
@@ -152,6 +160,19 @@ namespace TK {
                 // FUTURE NOTE: RETURN IF (DO NOTHING) IF MENU OR UI WINDOW IS OPEN
                 //PERFORM A DODGE
                 player.playerLocomotionManager.AttempToPerformDodge();
+            }
+        }
+        
+        private void HandleSprinting()
+        {
+            if(sprintInput)
+            {
+                // HANDLE SPRINTING
+                player.playerLocomotionManager.HandleSprinting();
+            }
+            else
+            {
+                player.playerNetworkManager.isSprinting.Value= false;
             }
         }
     }

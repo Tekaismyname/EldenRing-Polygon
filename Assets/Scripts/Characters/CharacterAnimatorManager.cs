@@ -8,26 +8,25 @@ namespace TK
     public class CharacterAnimatorManager : MonoBehaviour
     {
         CharacterManager character;
-        float vertical;
-        float horizontal;
+        int vertical;
+        int horizontal;
         protected virtual private void Awake()
         {
             character= GetComponent<CharacterManager>();
+            vertical = Animator.StringToHash("Vertical");
+            horizontal = Animator.StringToHash("Horizontal");
         }
-        public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
+        public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, bool isSprinting)
         {
-            // OPTION 1
-            if (character == null)
+            float horizontalAmount = horizontalValue;
+            float verticalAmount = verticalValue;
+
+            if(isSprinting )
             {
-                Debug.Log("Character Animator Null");
-                return;
-            }         
-            else
-            {
-                character.animator.SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-                character.animator.SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
+                verticalAmount= 2;
             }
-            
+            character.animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);
+            character.animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);
         }
 
         public virtual void PlayerTargetActionAnimation(string targetAnimation, 
