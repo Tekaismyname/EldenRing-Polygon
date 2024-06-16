@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 6882014454383906016}
   - component: {fileID: -6196288754585169308}
   - component: {fileID: -8557137731620960353}
+  - component: {fileID: 2563291969767855212}
   - component: {fileID: -5373300561792306838}
   - component: {fileID: 4805571838430977492}
   - component: {fileID: 8193168936010784413}
@@ -107,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 978328983
+  GlobalObjectIdHash: 3709563647
   InScenePlacedSourceGlobalObjectIdHash: 978328983
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -137,6 +138,19 @@ MonoBehaviour:
   canMove: 1
   playerAnimatorManager: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
+  playerNetworkManager: {fileID: 0}
+--- !u!114 &2563291969767855212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155989737887599648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d55208c64aad0840b0a7ad3c54a505c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-5373300561792306838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +176,8 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmout:
     m_InternalValue: 0
+  isSprinting:
+    m_InternalValue: 0
 --- !u!114 &4805571838430977492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +196,7 @@ MonoBehaviour:
   walkingSpeed: 1.5
   runningSpeed: 3.5
   rotationSpeed: 15
+  sprintingSpeed: 6.5
 --- !u!114 &8193168936010784413
 MonoBehaviour:
   m_ObjectHideFlags: 0

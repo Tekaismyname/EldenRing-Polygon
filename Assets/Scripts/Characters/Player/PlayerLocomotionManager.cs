@@ -21,9 +21,11 @@ namespace Tk
         [SerializeField] float runningSpeed = 5;
         [SerializeField] float rotationSpeed = 15;
         [SerializeField] float sprintingSpeed = 6.5f;
-
+        [SerializeField] int sprintingStaminaCost = 2;
         [Header("Dodge")]
         private Vector3 rollDirection;
+        [SerializeField] float dodgeStaminaCost = 25;
+        [SerializeField] float backstepStaminaCost = 15;
         protected override void Awake()
         {
             base.Awake();
@@ -123,7 +125,11 @@ namespace Tk
                 player.playerNetworkManager.isSprinting.Value = false;
             }
             // IF WE ARE OUT THE STAMINA, SET SPRINTING TO FALSE
-
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+                return;
+            }
             // IF WE ARE MOVING SET SPRINTING TO TRUE
             if(moveAmount >= 0.5)
             {
@@ -135,10 +141,15 @@ namespace Tk
                 player.playerNetworkManager.isSprinting.Value = false;
             }
             
+            if(player.playerNetworkManager.isSprinting.Value)
+            {
+                player.playerNetworkManager.currentStamina.Value -= sprintingStaminaCost * Time.deltaTime;
+            }
         }
         public void AttempToPerformDodge()
         {
-            if (player.isPerformingAction) return;
+            if(player.isPerformingAction) return;
+            if (player.playerNetworkManager.currentStamina.Value <= 0) return;
             // IF WE ARE MOVING WHEN WE ATTEMPT TO DODGE, WE PERFORM A ROLL
             if(PlayerInputManager.instance.moveAmount > 0)
             {
@@ -154,15 +165,21 @@ namespace Tk
 
                 //PERFORM A ROLL ANIMATION
                 player.playerAnimatorManager.PlayerTargetActionAnimation("Roll_Forward_01", true);
+
+                // AFTER ROLLING STAMINA REDUCE 
+                player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
             }
             // IF WE ARE STATIONARY, WE PERFORM A BACKSTEP
             else
             {
                 // PERFORM A BACKSTEP ANIMATION
                 player.playerAnimatorManager.PlayerTargetActionAnimation("Back_Step_01", true);
+                player.playerNetworkManager.currentStamina.Value -= backstepStaminaCost;
             }
+
             
         }
+
      }   
 }
 

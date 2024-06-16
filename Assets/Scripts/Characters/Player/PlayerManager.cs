@@ -10,6 +10,7 @@ namespace TK
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
+        [HideInInspector] public PlayerStatsManager playerStatsManager;
         protected override void Awake()
         {
             base.Awake();
@@ -18,6 +19,7 @@ namespace TK
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager= GetComponent<PlayerAnimatorManager>();
             playerNetworkManager= GetComponent<PlayerNetworkManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
         }
 
         protected override void Update()
@@ -31,6 +33,8 @@ namespace TK
 
             // HANDLE ALL CHARACTER MOVEMENT
             playerLocomotionManager.HandleAllMovement();
+            // REGENATE STAMINA
+            playerStatsManager.RegenerateStamina();
         }
 
         protected override void LateUpdate()
@@ -53,7 +57,16 @@ namespace TK
             {
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
+                
+                playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUiHudManager.SetNewStaminaValue;
+                Debug.Log(playerNetworkManager.currentStamina.OnValueChanged);
+                playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
                 Debug.Log("IsOwner");
+
+                // THIS WILL BE MOVED WHEN SAVING AN LOADING IS ADDED
+                playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedEnduranceLevel(playerNetworkManager.endurance.Value);
+                playerNetworkManager.currentStamina.Value = playerStatsManager.CalculateStaminaBasedEnduranceLevel(playerNetworkManager.endurance.Value);
+                PlayerUIManager.instance.playerUiHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
             }
         }
     }

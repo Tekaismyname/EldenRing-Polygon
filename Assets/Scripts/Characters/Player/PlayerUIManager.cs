@@ -11,6 +11,8 @@ namespace TK
         [Header("NETWORK JOIN")]
         [SerializeField] bool startGameAsClient;
 
+        [HideInInspector] public PlayerUiHudManager playerUiHudManager;
+
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
@@ -25,6 +27,7 @@ namespace TK
             {
                 Destroy(gameObject);
             }
+            playerUiHudManager = GetComponentInChildren<PlayerUiHudManager>();
         }
         private void Update()
         {
