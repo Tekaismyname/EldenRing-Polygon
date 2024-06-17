@@ -11,7 +11,7 @@ namespace TK
         [Header("Stamina Regeneration")]
         private float staminaRegenerationTimer = 0;
         private float staminaStickTimer;
-        [SerializeField] float staminaRegenerationDelay = 2;
+        [SerializeField] float staminaRegenerationDelay = 1;
         [SerializeField] float staminaRegenerationAmount = 2;
 
         protected virtual void Awake()
@@ -49,7 +49,7 @@ namespace TK
 
             staminaRegenerationTimer += Time.deltaTime;
 
-            if (staminaRegenerationTimer >= staminaRegenerationTimer)
+            if (staminaRegenerationTimer >= staminaRegenerationDelay)
             {
                 if (character.characterNetworkManager.currentStamina.Value < character.characterNetworkManager.maxStamina.Value)
                 {

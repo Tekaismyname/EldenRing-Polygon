@@ -1816,6 +1816,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: World Save Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7850484951340762295, guid: e77d9a0483f74f942a1cb45611619574,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e77d9a0483f74f942a1cb45611619574, type: 3}
 --- !u!1001 &7981497344300585009

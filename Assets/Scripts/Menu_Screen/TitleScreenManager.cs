@@ -13,7 +13,8 @@ namespace TK
 
         public void StartNewGame()
         {
-            StartCoroutine(WorldSaveGameManager.intance.LoadNewGame());
+            WorldSaveGameManager.intance.CreateNewGame();
+            StartCoroutine(WorldSaveGameManager.intance.LoadWorldScene());
         }
     }
 }
