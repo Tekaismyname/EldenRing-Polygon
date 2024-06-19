@@ -57,7 +57,8 @@ namespace TK
             {
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
-                
+                WorldSaveGameManager.intance.player = this;
+
                 playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUiHudManager.SetNewStaminaValue;
                 Debug.Log(playerNetworkManager.currentStamina.OnValueChanged);
                 playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
@@ -72,6 +73,7 @@ namespace TK
 
         public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
         {
+            Debug.Log("Save Data to current Character Player success");
             currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
             currentCharacterData.xPosition = transform.position.x;
             currentCharacterData.yPosition = transform.position.y;

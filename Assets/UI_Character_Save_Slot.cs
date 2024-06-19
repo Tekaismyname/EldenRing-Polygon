@@ -17,6 +17,11 @@ namespace TK
         public TextMeshProUGUI characterName;
         public TextMeshProUGUI timePlayed;
 
+        private void Awake()
+        {
+            characterName = GetComponent<TextMeshProUGUI>();
+
+        }
         private void OnEnable()
         {
             LoadSaveSlots();
@@ -187,6 +192,12 @@ namespace TK
                     gameObject.SetActive(false);
                 }
             }
+        }
+
+        public void LoadGameFromCharacterSlot()
+        {
+            WorldSaveGameManager.intance.currentCharacterSlotBeingUsed = characterSlot;
+            WorldSaveGameManager.intance.LoadGame();
         }
     }
 }

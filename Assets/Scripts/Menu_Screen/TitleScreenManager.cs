@@ -7,6 +7,7 @@ namespace TK
 {
     public class TitleScreenManager : MonoBehaviour
     {
+        public static TitleScreenManager instance;
         [Header("Menus")]
         [SerializeField] GameObject titleScreenMainMenu;
         [SerializeField] GameObject titleScreenLoadMenu;
@@ -14,6 +15,22 @@ namespace TK
         [Header("Buttons")]
         [SerializeField] Button loadMenuReturnButton;
         [SerializeField] Button mainMenuLoadGameButton;
+        [SerializeField] Button mainMenuNewGameButton;
+
+        [Header("Pop Up")]
+        [SerializeField] GameObject noCharacterSlotPopUp;
+        [SerializeField] Button noCharacterSlotOkayButton;
+        private void Awake()
+        {
+            if(instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
         public void StartNetworkAtHost()
         {
             NetworkManager.Singleton.StartHost();
@@ -21,8 +38,8 @@ namespace TK
 
         public void StartNewGame()
         {
-            WorldSaveGameManager.intance.CreateNewGame();
-            StartCoroutine(WorldSaveGameManager.intance.LoadWorldScene());
+            WorldSaveGameManager.intance.AttemptToCreateNewGame();
+            
         }
 
         public void OpenLoadGameMenu()
@@ -47,6 +64,17 @@ namespace TK
 
             // SELECT THE LOAD BUTTON
             mainMenuLoadGameButton.Select();
+        }
+
+        public void DisplayNoFreeCharacterSlotPopUp()
+        {
+            noCharacterSlotPopUp.SetActive(true);
+            noCharacterSlotOkayButton.Select();
+        }
+        public void CloseNoFreeCharacterSlotPopUp()
+        {
+            noCharacterSlotPopUp.SetActive(false);
+            mainMenuNewGameButton.Select();
         }
     }
 }
