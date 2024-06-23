@@ -19,7 +19,7 @@ namespace TK
 
         private void Awake()
         {
-            characterName = GetComponent<TextMeshProUGUI>();
+            characterName = GetComponentInChildren<TextMeshProUGUI>();
 
         }
         private void OnEnable()
@@ -39,7 +39,7 @@ namespace TK
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
-                {
+                {                  
                     characterName.text = WorldSaveGameManager.intance.characterSlot01.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
@@ -198,6 +198,11 @@ namespace TK
         {
             WorldSaveGameManager.intance.currentCharacterSlotBeingUsed = characterSlot;
             WorldSaveGameManager.intance.LoadGame();
+        }
+
+        public void SelectCurrentSLot()
+        {
+            TitleScreenManager.instance.SelectCharacterSlot(characterSlot);
         }
     }
 }

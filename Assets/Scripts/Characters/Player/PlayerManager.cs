@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Tk;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TK
 {
@@ -73,11 +74,15 @@ namespace TK
 
         public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
         {
-            Debug.Log("Save Data to current Character Player success");
+            currentCharacterData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+
             currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
-            currentCharacterData.xPosition = transform.position.x;
-            currentCharacterData.yPosition = transform.position.y;
-            currentCharacterData.zPosition = transform.position.z;
+            currentCharacterData.xPosition = this.transform.position.x;
+            currentCharacterData.yPosition = this.transform.position.y;
+            currentCharacterData.zPosition = this.transform.position.z;
+            Debug.Log("Save Data to current Character Player success, current position: " + new Vector3(currentCharacterData.xPosition,
+                                                                                                    currentCharacterData.yPosition,
+                                                                                                    currentCharacterData.zPosition));
         }
         public void LoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
         {

@@ -212,6 +212,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "6d6d8084-9ca7-421f-a3f3-9f87006c4d86",
+            "actions": [
+                {
+                    "name": "X",
+                    "type": "Button",
+                    "id": "6f939b34-f82e-4b44-b1dc-7a77fc150054",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a1852ede-d6c8-48b4-9bfc-cdda9d075d3f",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
