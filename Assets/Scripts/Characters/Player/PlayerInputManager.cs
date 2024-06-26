@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 namespace TK { 
     public class PlayerInputManager : MonoBehaviour
     {
+        //singleton
         public static PlayerInputManager instance;
-
+        // local player
         public PlayerManager player;
+        // control player
         public PlayerControls playerControls;
-        // THINK ABOUT THE GOAL IN STEP
-        // 1. FIND THE WAY TO READ THE VALUE OF A JOY STICK
-        // 2. MOVE THE CHARACTER BASED ON THOSE VALUES
 
         [Header("CAMERA MOVEMENT INPUT")]
         [SerializeField] Vector2 cameraInput;
@@ -27,7 +26,7 @@ namespace TK {
         [Header("PLAYER ACTION INPUT")]
         [SerializeField] bool dodgeInput = false;
         [SerializeField] bool sprintInput = false;
-
+        [SerializeField] bool jumpInput = false;
 
         private void Awake()
         {
@@ -77,6 +76,7 @@ namespace TK {
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+                playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
 
                 // HOLDING THE INPUT, SETS THE BOOL TO TRUE
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -113,7 +113,7 @@ namespace TK {
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
-            HandleSprinting();
+            HandleSprintInput();
         }
         //  MOVEMENT
         private void HandlePlayerMovementInput()
@@ -163,7 +163,7 @@ namespace TK {
             }
         }
         
-        private void HandleSprinting()
+        private void HandleSprintInput()
         {
             if(sprintInput)
             {
@@ -174,6 +174,19 @@ namespace TK {
             {
                 player.playerNetworkManager.isSprinting.Value= false;
             }
+        }
+
+        private void HandleJumpInput()
+        {
+            if(jumpInput)
+            {
+                jumpInput = false;
+
+                // IF WE HAVE A UI WINDOWN OPEN, SIMPLY RETURN WITHOUT DOING ANYTHING
+
+                // ATTEMPT TO PERFORM JUMP
+                player.playerLocomotionManager.AttempToPerformJump();
+            }    
         }
     }
 }

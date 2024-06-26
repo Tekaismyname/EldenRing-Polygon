@@ -21,11 +21,12 @@ namespace Tk
         [SerializeField] float runningSpeed = 5;
         [SerializeField] float rotationSpeed = 15;
         [SerializeField] float sprintingSpeed = 6.5f;
-        [SerializeField] int sprintingStaminaCost = 2;
+        [SerializeField] int sprintingStaminaCost = 5;
         [Header("Dodge")]
         private Vector3 rollDirection;
         [SerializeField] float dodgeStaminaCost = 25;
         [SerializeField] float backstepStaminaCost = 15;
+        [SerializeField] float jumpStaminaCost = 10;
         protected override void Awake()
         {
             base.Awake();
@@ -176,10 +177,26 @@ namespace Tk
                 player.playerAnimatorManager.PlayerTargetActionAnimation("Back_Step_01", true);
                 player.playerNetworkManager.currentStamina.Value -= backstepStaminaCost;
             }
-
-            
         }
-
+        public void AttempToPerformJump()
+        {
+            // IF WE ARE PERFORMING A GENARAL ACTION, WE DO NOT WANT TO ALLOW A JUMP (WILL CHANGE WHEN COMBAT IS ADDED)
+            if (player.isPerformingAction) return;
+            // IF WE ARE OUT OF STAMINA, WE DO NOT WISH TO ALLOW A JUMP
+            if (player.playerNetworkManager.currentStamina.Value <= 0) return;
+            // IF WE ARE ALREADY IN A JUMP, WE DO NOT WANT TO ALLOW A JUMP AGAIN UNTILL THE CURRENT HUMP HAS FINISHED
+            if (player.isJumping) return;
+            // IF WE ARE NOT GROUNDED, WE DO NOT WANT TO ALLOW A JUMP
+            if (player.isGrounded) return;
+            // IF WE ARE TWO HANDING OUR WEAPON, PLAY THE TWO HANDED JUMP ANIMATION, OTHERWISE PLAY THE ONE HANDED ANIMATION ( TO DO )
+            player.playerAnimatorManager.PlayerTargetActionAnimation("Main_Jump_Start_01", false);
+            player.isJumping = true;
+            player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+        }
+        public void ApplyJumpingVelocity()
+        {
+            // APPLY AN UPWARD VELOCITY 
+        }
      }   
 }
 

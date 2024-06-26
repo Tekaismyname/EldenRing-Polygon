@@ -12,6 +12,8 @@ namespace TK
 
         [Header("Flags")]
         public bool isPerformingAction = false;
+        public bool isGrounded = true;
+        public bool isJumping = false;
         public bool applyRootMotion = false;
         public bool canRotate = true;
         public bool canMove = true;
@@ -28,6 +30,7 @@ namespace TK
 
         protected virtual void Update()
         {
+            animator.SetBool("isGrounded", isGrounded);
             // IF THIS CHARACTER CONTROLLED FORM OUR SIDE, THEN ASSIGN ITS NETWORK POSITION TO THE POSITION OF OUR TRANSFORM
             if (IsOwner)
             {
