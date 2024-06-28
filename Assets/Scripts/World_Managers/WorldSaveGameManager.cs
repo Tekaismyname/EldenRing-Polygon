@@ -255,6 +255,7 @@ namespace TK
             currentCharacterData = saveFileDataWriter.LoadSaveFile();
 
             StartCoroutine(LoadWorldScene());
+            
         }
 
         public void SaveGame()

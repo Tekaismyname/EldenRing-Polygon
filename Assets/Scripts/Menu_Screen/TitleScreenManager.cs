@@ -9,6 +9,7 @@ namespace TK
 {
     public class TitleScreenManager : MonoBehaviour
     {
+        public GameObject player;
         public static TitleScreenManager instance;
         [Header("Menus")]
         [SerializeField] GameObject titleScreenMainMenu;
@@ -50,7 +51,6 @@ namespace TK
         public void StartNewGame()
         {
             WorldSaveGameManager.intance.AttemptToCreateNewGame();
-            
         }
 
         public void OpenLoadGameMenu()
@@ -124,6 +124,7 @@ namespace TK
             deleteCharacterSlotPopUp.SetActive(false);
             loadMenuReturnButton.Select();
         }
+       
     }
 }
 

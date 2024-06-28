@@ -114,6 +114,7 @@ namespace TK {
             HandleCameraMovementInput();
             HandleDodgeInput();
             HandleSprintInput();
+            HandleJumpInput();
         }
         //  MOVEMENT
         private void HandlePlayerMovementInput()

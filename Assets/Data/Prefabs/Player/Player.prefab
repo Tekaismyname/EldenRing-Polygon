@@ -51,9 +51,10 @@ GameObject:
   - component: {fileID: -7681426934991662547}
   - component: {fileID: 383451179919413649}
   - component: {fileID: 4660359272922802080}
+  - component: {fileID: 1719888885208103033}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,7 +67,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155989737887599648}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.13, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -184,11 +185,11 @@ MonoBehaviour:
   isSprinting:
     m_InternalValue: 0
   endurance:
-    m_InternalValue: 1
+    m_InternalValue: 10
   currentStamina:
     m_InternalValue: 0
   maxStamina:
-    m_InternalValue: 0
+    m_InternalValue: 99
   characterName:
     m_InternalValue:
       utf8LengthInBytes: 9
@@ -275,7 +276,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   groundCheckSphereRaidus: 0.3
-  yVelocity: {x: 0, y: 0, z: 0}
+  yVelocity: {x: 0, y: -20, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -5
   horizontalMovement: 0
@@ -289,6 +290,9 @@ MonoBehaviour:
   dodgeStaminaCost: 25
   backstepStaminaCost: 15
   jumpStaminaCost: 10
+  jumpHeight: 1
+  jumpForwardSpeed: 3
+  freeFallSpeed: 3
 --- !u!114 &8193168936010784413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,12 +317,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.8
-  m_Radius: 0.3
+  m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.88, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!82 &383451179919413649
 AudioSource:
   m_ObjectHideFlags: 0
@@ -427,6 +431,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404fc7d48ebb1848a95d61225d51a61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1719888885208103033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155989737887599648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9dd72188fa323c49b223e73e9472e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: 1f2dafec9573b0e448371c900ef18ee5, type: 2}
+  processEffect: 0
 --- !u!1 &353303433375443689
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,11 +22,18 @@ namespace Tk
         [SerializeField] float rotationSpeed = 15;
         [SerializeField] float sprintingSpeed = 6.5f;
         [SerializeField] int sprintingStaminaCost = 5;
+
         [Header("Dodge")]
         private Vector3 rollDirection;
         [SerializeField] float dodgeStaminaCost = 25;
         [SerializeField] float backstepStaminaCost = 15;
+
+        [Header("Jump")]
         [SerializeField] float jumpStaminaCost = 10;
+        [SerializeField] float jumpHeight = 4;
+        [SerializeField] float jumpForwardSpeed = 5;
+        [SerializeField] float freeFallSpeed = 2;
+        private Vector3 jumpDirection;
         protected override void Awake()
         {
             base.Awake();
@@ -61,7 +68,8 @@ namespace Tk
             //  GROUNDED MOVEMENT
             HandleGroundMovement();
             HandleRotation();
-            // AERIAL MOVEMENT
+            HandleJumpngMovement();
+            HandleFreeFallMovement();
         }
 
         private void GetMovementValues()
@@ -99,6 +107,27 @@ namespace Tk
                 }
             }
   
+        }
+        private void HandleJumpngMovement()
+        {
+            if (player.isJumping)
+            {
+                player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
+            }
+        }
+        private void HandleFreeFallMovement()
+        {
+            if(!player.isGrounded)
+            {
+                Vector3 freeFallDirection;
+
+                freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
+                freeFallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.verticalInput;
+                freeFallDirection.y = 0;
+
+
+                player.characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
+            }
         }
         private void HandleRotation()
         {
@@ -187,15 +216,40 @@ namespace Tk
             // IF WE ARE ALREADY IN A JUMP, WE DO NOT WANT TO ALLOW A JUMP AGAIN UNTILL THE CURRENT HUMP HAS FINISHED
             if (player.isJumping) return;
             // IF WE ARE NOT GROUNDED, WE DO NOT WANT TO ALLOW A JUMP
-            if (player.isGrounded) return;
+            if (!player.isGrounded) return;
             // IF WE ARE TWO HANDING OUR WEAPON, PLAY THE TWO HANDED JUMP ANIMATION, OTHERWISE PLAY THE ONE HANDED ANIMATION ( TO DO )
             player.playerAnimatorManager.PlayerTargetActionAnimation("Main_Jump_Start_01", false);
             player.isJumping = true;
             player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+            jumpDirection.y = 0;
+
+            if(jumpDirection != Vector3.zero)
+            {
+                // IF WE ARE SPRINTING, JUMP DIRECTION IS AT FULL DISTANCE
+                if (player.playerNetworkManager.isSprinting.Value)
+                {
+                    jumpDirection *= 1;
+                }
+                // IF WE ARE RUNNING, JUMP DIRECTION IS AT HALF DISTANCE
+                else if (PlayerInputManager.instance.moveAmount > 0.5)
+                {
+                    jumpDirection *= 0.5f;
+                }
+                // IF WE ARE WALKING, JUMP DIRECTION IS AT QUARTER DISTANCE
+                else if (PlayerInputManager.instance.moveAmount <= 0.5)
+                {
+                    jumpDirection *= 0.25f;
+                }
+            }
+            
         }
         public void ApplyJumpingVelocity()
         {
             // APPLY AN UPWARD VELOCITY 
+            yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
         }
      }   
 }

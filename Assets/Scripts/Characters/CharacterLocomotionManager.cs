@@ -9,7 +9,7 @@ namespace TK
     {
         CharacterManager character;
         [Header("Ground check & Jumping")]
-        [SerializeField] float gravityForce = -5.55f;
+        [SerializeField] protected float gravityForce = -5.55f;
         [SerializeField] LayerMask groundLayer;
         [SerializeField] float groundCheckSphereRaidus = 1;
         [SerializeField] protected Vector3 yVelocity; // THE FORCE AT WHICH OUR CHARACTER IS PULLE UP OR DOWN (jumping or falling)
