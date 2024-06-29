@@ -8,12 +8,16 @@ namespace TK
     public class UI_StatBar : MonoBehaviour
     {
         private Slider slider;
-        // VARIABLE TO SCALE BAR SIZE DEPENDING ON STAT (HIGHEST STAT = LONGER BAR ACROSS SCREEN)
+        private RectTransform rectTransform;
+        [Header("Bar Options")]
+        [SerializeField] protected bool scaleBarLengthWithStats = true;
+        [SerializeField] protected float widthScaleMultiplier = 1;
         // SECONDARY BAR BEHIND MAY BAR FOR POLISH EFFECT (YELLOW BAR THAT SHOWS HOW MUCH AN ACTION/ DAMAGE TAKES AWAY FORM CUREENT STAT)
 
         protected virtual void Awake()
         {
             slider= GetComponent<Slider>();
+            rectTransform = GetComponent<RectTransform>();
         }
 
         public virtual void SetStat(int newValue)
@@ -24,6 +28,14 @@ namespace TK
         {
             slider.maxValue = maxValue;
             slider.value = maxValue;
+
+            if(scaleBarLengthWithStats)
+            {
+                // SCALE THE TRANSFORM OF THIS OBJECT
+                rectTransform.sizeDelta = new Vector2(maxValue * widthScaleMultiplier, rectTransform.sizeDelta.y);
+                // RESETS THJE POSITION OF THE BARS BASED ON THEIR LAYOUT GROUP'S SETTINGS
+                PlayerUIManager.instance.playerUiHudManager.RefreshHUD();
+            }
         }
     }
 }

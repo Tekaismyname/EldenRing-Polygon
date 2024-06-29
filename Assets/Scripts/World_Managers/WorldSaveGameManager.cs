@@ -64,6 +64,7 @@ namespace TK
                 loadGame = false;
                 LoadGame();
             }
+            
         }
         public string DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(CharacterSlot characterSlot)
         {
@@ -118,7 +119,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_01;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -132,7 +133,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_02;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -145,7 +146,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_03;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -158,7 +159,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_04;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -171,7 +172,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_05;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -185,7 +186,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_06;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -198,7 +199,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_07;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -211,7 +212,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_08;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -224,7 +225,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_09;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
 
@@ -244,6 +245,12 @@ namespace TK
             TitleScreenManager.instance.DisplayNoFreeCharacterSlotPopUp();
         }
 
+        private void NewGame()
+        {
+            // SAVE THE NEWLY CREATED CHARACTERS STATS, AND ITEMS(WHEN CREATION SCREEN IS ADDED)
+            SaveGame();
+            StartCoroutine(LoadWorldScene());
+        }
         public void LoadGame()
         {
             // LOAD A PREVIOUS FILE, WITH A FILE NAME DEPENDING ON WHICH SLOT WE ARE USING
