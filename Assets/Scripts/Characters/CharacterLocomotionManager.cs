@@ -11,7 +11,7 @@ namespace TK
         [Header("Ground check & Jumping")]
         [SerializeField] protected float gravityForce = -5.55f;
         [SerializeField] LayerMask groundLayer;
-        [SerializeField] float groundCheckSphereRaidus = 1;
+        [SerializeField] float groundCheckSphereRaidus = 0.3f;
         [SerializeField] protected Vector3 yVelocity; // THE FORCE AT WHICH OUR CHARACTER IS PULLE UP OR DOWN (jumping or falling)
         [SerializeField] protected float groundedYVelocity = -20; // THE FORCE AT WHICH OUR CHARACTER IS STICKING TO THE GORUND WHILST THEY ARE GORUNDED
         [SerializeField] protected float fallStartYVelocity = -5; // THE FORCE AT WHICH OUR CHARACTER BEGINS TO FALL WHEN THEY BECOME UNGROUNDED ( RISE AS THEY FALL LONGER )
@@ -19,7 +19,7 @@ namespace TK
         protected float inAirTimer = 0;
         protected virtual void Awake()
         {
-            character = GetComponent<CharacterManager>();
+            character = GetComponentInChildren<CharacterManager>();
         }
 
         protected virtual void Update()
@@ -50,8 +50,10 @@ namespace TK
                 yVelocity.y += gravityForce * Time.deltaTime;
                 
             }
+
             // IF THERE SHOULD ALWAYS BE SOME FORCE APPLIED TO THE Y VELOCIRY
             character.characterController.Move(yVelocity * Time.deltaTime);
+           
         }
 
         protected void HandleGroundCheck()
@@ -59,7 +61,7 @@ namespace TK
             character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRaidus, groundLayer);
         }
         // DRAWS OUR GROUND CHECK SPHERE IN SCENE VIEW
-        protected void OnDrawGizmosSelected()
+       protected void OnDrawGizmosSelected()
         {
             Gizmos.DrawSphere(character.transform.position, groundCheckSphereRaidus);
         }

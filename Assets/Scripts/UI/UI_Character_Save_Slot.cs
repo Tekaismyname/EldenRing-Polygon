@@ -35,12 +35,12 @@ namespace TK
             // SAVE SLOT 01
             if(characterSlot == CharacterSlot.CharacterSlot_01)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {                  
-                    characterName.text = WorldSaveGameManager.intance.characterSlot01.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -51,12 +51,12 @@ namespace TK
             // SAVE SLOT 02
             else if (characterSlot == CharacterSlot.CharacterSlot_02)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot02.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot02.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -67,12 +67,12 @@ namespace TK
             // SAVE SLOT 03
             else if (characterSlot == CharacterSlot.CharacterSlot_03)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot03.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot03.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -83,12 +83,12 @@ namespace TK
             // SAVE SLOT 04
             else if (characterSlot == CharacterSlot.CharacterSlot_04)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot04.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot04.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -99,12 +99,12 @@ namespace TK
             // SAVE SLOT 05
             else if (characterSlot == CharacterSlot.CharacterSlot_05)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot05.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot05.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -115,12 +115,12 @@ namespace TK
             // SAVE SLOT 06
             else if (characterSlot == CharacterSlot.CharacterSlot_06)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot06.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot06.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -131,12 +131,12 @@ namespace TK
             // SAVE SLOT 07
             else if (characterSlot == CharacterSlot.CharacterSlot_07)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot07.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot07.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -147,12 +147,12 @@ namespace TK
             // SAVE SLOT 08
             else if (characterSlot == CharacterSlot.CharacterSlot_08)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot08.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot08.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -163,12 +163,12 @@ namespace TK
             // SAVE SLOT 09
             else if (characterSlot == CharacterSlot.CharacterSlot_09)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot09.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot09.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -179,12 +179,12 @@ namespace TK
             // SAVE SLOT 10
             else if (characterSlot == CharacterSlot.CharacterSlot_10)
             {
-                saveFileDataWriter.saveFileName = WorldSaveGameManager.intance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
+                saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.DecideCharacterFleNameBasedOnCharacterSlotBeingUsed(characterSlot);
 
                 // IF THE FILE EXISTS, GET INFOMATION FROM IT
                 if (saveFileDataWriter.CheckToSeeIfFileExists())
                 {
-                    characterName.text = WorldSaveGameManager.intance.characterSlot10.characterName;
+                    characterName.text = WorldSaveGameManager.instance.characterSlot10.characterName;
                 }
                 // IF IT DOES NOT, DISABLE THIS GAMEOBJECT
                 else
@@ -196,8 +196,8 @@ namespace TK
 
         public void LoadGameFromCharacterSlot()
         {
-            WorldSaveGameManager.intance.currentCharacterSlotBeingUsed = characterSlot;
-            WorldSaveGameManager.intance.LoadGame();
+            WorldSaveGameManager.instance.currentCharacterSlotBeingUsed = characterSlot;
+            WorldSaveGameManager.instance.LoadGame();
         }
 
         public void SelectCurrentSLot()

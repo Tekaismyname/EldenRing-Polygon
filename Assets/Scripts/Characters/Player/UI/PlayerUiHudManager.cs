@@ -16,9 +16,9 @@ namespace TK
             staminaBar.gameObject.SetActive(false);
             staminaBar.gameObject.SetActive(true);
         }
-        public void SetNewHealthValue(float oldValue, float newValue)
+        public void SetNewHealthValue(int oldValue, int newValue)
         {
-            healthBar.SetStat(Mathf.RoundToInt(newValue));
+            healthBar.SetStat(newValue);
         }
 
         public void SetMaxHealthValue(int maxStamina)

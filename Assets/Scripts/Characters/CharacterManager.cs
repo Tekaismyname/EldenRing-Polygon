@@ -14,6 +14,7 @@ namespace TK
 
         [HideInInspector] public CharacterNetworkManager characterNetworkManager;
         [HideInInspector] public CharacterEffectsManager characterEffectsManager;
+        [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
 
         [Header("Flags")]
         public bool isPerformingAction = false;
@@ -31,6 +32,7 @@ namespace TK
             animator = GetComponent<Animator>();
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectsManager = GetComponent<CharacterEffectsManager>();
+            characterAnimatorManager = GetComponent<CharacterAnimatorManager>();    
         }
 
         protected virtual void Update()
@@ -62,7 +64,36 @@ namespace TK
 
         }
 
+        public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+            if (IsOwner)
+            {
+                characterNetworkManager.currentHealth.Value = 0;
+                isDead.Value = true;
+
+                // RESET ANY FLAGS HERE THAT NEED TO BE RESET
+                // NOTHING YET
+
+                // IF WE ARE NOT GROUNDED, PLAY AERIAL DEATH ANIMATION
+                if(!manuallySelectDeathAnimation)
+                {
+                    characterAnimatorManager.PlayerTargetActionAnimation("Dead_01", true);
+                }
+            }
+
+            // PLAY SOME DEATH SFX
+
+            yield return new WaitForSeconds(5);
+
+            // AWARD PLAYERS WITH RUNES
+
+            // DISABLE CHARACTER
+        }
         
+        public virtual void ReviveCharacter()
+        {
+
+        }
     }
 }
 

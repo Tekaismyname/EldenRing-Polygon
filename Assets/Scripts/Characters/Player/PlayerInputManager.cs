@@ -56,7 +56,7 @@ namespace TK {
         private void OnSceneChange(Scene oldScene, Scene newScene)
         {
             // IF WE ARE LOADING INTO OUR WORLD SCENE, ENABLE OUR PLAYER CONTROLS
-            if(newScene.buildIndex == WorldSaveGameManager.intance.getWorldIndex())
+            if(newScene.buildIndex == WorldSaveGameManager.instance.getWorldIndex())
             {
                 instance.enabled = true;
             }

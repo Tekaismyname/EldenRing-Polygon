@@ -43,6 +43,7 @@ namespace TK
                 Destroy(gameObject);
             }
         }
+
         public void StartNetworkAtHost()
         {
             NetworkManager.Singleton.StartHost();
@@ -50,7 +51,7 @@ namespace TK
 
         public void StartNewGame()
         {
-            WorldSaveGameManager.intance.AttemptToCreateNewGame();
+            WorldSaveGameManager.instance.AttemptToCreateNewGame();
         }
 
         public void OpenLoadGameMenu()
@@ -76,7 +77,6 @@ namespace TK
             // SELECT THE LOAD BUTTON
             mainMenuLoadGameButton.Select();
 
-            Debug.Log("Return success");
         }
 
         public void DisplayNoFreeCharacterSlotPopUp()
@@ -111,7 +111,7 @@ namespace TK
         public void DeleteCharacterSlot()
         {
             deleteCharacterSlotPopUp.SetActive(false);
-            WorldSaveGameManager.intance.DeleteGame(currentSelectedSlot);
+            WorldSaveGameManager.instance.DeleteGame(currentSelectedSlot);
 
             // WE DISABLE AND THEN ENABLE THEN LOAD MENU, TO REFRESH THE SLOTS(the delete slots will become inactive)
             titleScreenLoadMenu.SetActive(false);

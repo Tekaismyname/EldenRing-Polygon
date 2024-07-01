@@ -12,6 +12,7 @@ namespace TK
         [SerializeField] bool startGameAsClient;
 
         [HideInInspector] public PlayerUiHudManager playerUiHudManager;
+        [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
 
         private void Start()
         {
@@ -28,6 +29,7 @@ namespace TK
                 Destroy(gameObject);
             }
             playerUiHudManager = GetComponentInChildren<PlayerUiHudManager>();
+            playerUIPopUpManager= GetComponentInChildren<PlayerUIPopUpManager>();
         }
         private void Update()
         {

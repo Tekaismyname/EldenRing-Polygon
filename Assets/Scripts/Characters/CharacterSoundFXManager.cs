@@ -16,7 +16,7 @@ namespace TK
         public void PlayRollSoundFX()
         {
             //audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
-            Debug.Log("No sound at all");
+            
         }
     }
 }

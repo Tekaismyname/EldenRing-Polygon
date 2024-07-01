@@ -8,6 +8,8 @@ namespace TK
 {
     public class PlayerManager : CharacterManager
     {
+        [Header("DEBUG MENU")]
+        [SerializeField] bool respawnCharacter = false;
         [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -36,6 +38,7 @@ namespace TK
             playerLocomotionManager.HandleAllMovement();
             // REGENATE STAMINA
             playerStatsManager.RegenerateStamina();
+            DebugMenu();
         }
 
         protected override void LateUpdate()
@@ -58,7 +61,7 @@ namespace TK
             {
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
-                WorldSaveGameManager.intance.player = this;
+                WorldSaveGameManager.instance.player = this;
 
                 // UPDATE THE TOTAL AMOUNT OF HEALTH OR STAMINA WHEN THE STAT LINKED TO EITHER CHANGES
                 playerNetworkManager.vitality.OnValueChanged += playerNetworkManager.SetNewMaxHealthValue;
@@ -69,20 +72,44 @@ namespace TK
                 playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUiHudManager.SetNewStaminaValue;
                 playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
                 
-
-                
             }
+
+            playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
         }
 
+        public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+
+            if (IsOwner)
+            {
+                PlayerUIManager.instance.playerUIPopUpManager.SendYouDiePopUp();
+            }
+            return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+            // CHECK FOR PLAYERS THAT ARE ALIVE, IF 0 RESPAWN CHARACTERS
+        }
+        public override void ReviveCharacter()
+        {
+            base.ReviveCharacter();
+
+            if (IsOwner)
+            {
+                playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
+                playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
+                // RESTORE FOCUS POINTS
+
+                // PLAY REBIRTH EFFECTS
+                playerAnimatorManager.PlayerTargetActionAnimation("Empty", false);
+            }
+        }
         public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
         {
             currentCharacterData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            
             currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
-            currentCharacterData.xPosition = player.transform.position.x;
-            currentCharacterData.yPosition = player.transform.position.y;
-            currentCharacterData.zPosition = player.transform.position.z;
-            Debug.Log(currentCharacterData.characterName);
+            currentCharacterData.xPosition = transform.position.x;
+            currentCharacterData.yPosition = transform.position.y;
+            currentCharacterData.zPosition = transform.position.z;
+            
             currentCharacterData.currentHealth = playerNetworkManager.currentHealth.Value;
             currentCharacterData.currentStamina = playerNetworkManager.currentStamina.Value;
 
@@ -105,6 +132,14 @@ namespace TK
             playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
             playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
             PlayerUIManager.instance.playerUiHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
+        }
+        private void DebugMenu()
+        {
+            if(respawnCharacter)
+            {
+                respawnCharacter = false;
+                ReviveCharacter();
+            }
         }
     }
 }

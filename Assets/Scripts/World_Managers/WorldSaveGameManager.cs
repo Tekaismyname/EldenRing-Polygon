@@ -6,7 +6,7 @@ namespace TK
 {
     public class WorldSaveGameManager : MonoBehaviour
     {
-        public static WorldSaveGameManager intance;
+        public static WorldSaveGameManager instance;
         public PlayerManager player;
 
         [Header("Save/Load")]
@@ -36,9 +36,9 @@ namespace TK
         public CharacterSaveData characterSlot10; 
         private void Awake()
         {
-            if(intance == null)
+            if(instance == null)
             {
-                intance = this;
+                instance = this;
             }
             else
             {
@@ -48,8 +48,9 @@ namespace TK
 
         private void Start()
         {
-            DontDestroyOnLoad(gameObject);
             LoadAllCharacterProfiles();
+            DontDestroyOnLoad(gameObject);
+            
         }
         private void Update()
         {
@@ -238,7 +239,7 @@ namespace TK
                 // IF THIS PROFILE SLOT IS NOT TAKEN, MAKE A NEW ONE USING THIS SLOT
                 currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_10;
                 currentCharacterData = new CharacterSaveData();
-                StartCoroutine(LoadWorldScene());
+                NewGame();
                 return;
             }
             // IF THERE ARE NO FREE SLOTS, NOTIFY THE PLAYER
@@ -277,7 +278,7 @@ namespace TK
             // GENERALLT WORKS ON MULTIPLE MACHINE TYPES (Application.persistentDataPath)
             saveFileDataWriter.saveDataDirectory = Application.persistentDataPath;
             saveFileDataWriter.saveFileName = saveFileName;
-            Debug.Log("Testing");
+           
             // PASS THE PLAYERS INFO, FROM GAME, TO THEIR SAVE FILE
             player.SaveGameDataToCurrentCharacterData(ref currentCharacterData);
             
