@@ -14,6 +14,7 @@ namespace TK
         [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
         [HideInInspector] public PlayerStatsManager playerStatsManager;
+        [HideInInspector] public PlayerInventoryManager playerInventoryManager;
         protected override void Awake()
         {
             base.Awake();
@@ -23,6 +24,7 @@ namespace TK
             playerAnimatorManager= GetComponent<PlayerAnimatorManager>();
             playerNetworkManager= GetComponent<PlayerNetworkManager>();
             playerStatsManager = GetComponent<PlayerStatsManager>();
+            playerInventoryManager= GetComponent<PlayerInventoryManager>();
         }
 
         protected override void Update()
@@ -121,8 +123,8 @@ namespace TK
         {
             playerNetworkManager.characterName.Value = currentCharacterData.characterName;
             Vector3 myPosition = new Vector3(currentCharacterData.xPosition, currentCharacterData.yPosition, currentCharacterData.zPosition);
-            transform.position= myPosition;
-
+            transform.position = myPosition;
+            //playerNetworkManager.networkPositionVelocity = myPosition;
             playerNetworkManager.vitality.Value = currentCharacterData.vitality;
             playerNetworkManager.endurance.Value = currentCharacterData.endurance;
 

@@ -117,6 +117,7 @@ namespace Tk
         }
         private void HandleFreeFallMovement()
         {
+            if (player.isGrounded) return;
             if(!player.isGrounded)
             {
                 Vector3 freeFallDirection;

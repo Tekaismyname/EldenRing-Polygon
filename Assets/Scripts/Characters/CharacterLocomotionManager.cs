@@ -12,24 +12,24 @@ namespace TK
         [SerializeField] protected float gravityForce = -5.55f;
         [SerializeField] LayerMask groundLayer;
         [SerializeField] float groundCheckSphereRaidus = 0.3f;
-        [SerializeField] protected Vector3 yVelocity; // THE FORCE AT WHICH OUR CHARACTER IS PULLE UP OR DOWN (jumping or falling)
+        [SerializeField] protected Vector3 yVelocity ; // THE FORCE AT WHICH OUR CHARACTER IS PULLE UP OR DOWN (jumping or falling)
         [SerializeField] protected float groundedYVelocity = -20; // THE FORCE AT WHICH OUR CHARACTER IS STICKING TO THE GORUND WHILST THEY ARE GORUNDED
         [SerializeField] protected float fallStartYVelocity = -5; // THE FORCE AT WHICH OUR CHARACTER BEGINS TO FALL WHEN THEY BECOME UNGROUNDED ( RISE AS THEY FALL LONGER )
         protected bool fallingVelocityHasBeenSet = false;
         protected float inAirTimer = 0;
         protected virtual void Awake()
         {
-            character = GetComponentInChildren<CharacterManager>();
+            character = GetComponent<CharacterManager>();
         }
 
         protected virtual void Update()
         {
             HandleGroundCheck();
-
-            if(character.isGrounded)
+            
+            if (character.isGrounded)
             {
                 // IF NOT JUMP
-                if(yVelocity.y < 0)
+                if(yVelocity.y <= 0)
                 {
                     inAirTimer = 0;
                     fallingVelocityHasBeenSet = false;
@@ -53,7 +53,7 @@ namespace TK
 
             // IF THERE SHOULD ALWAYS BE SOME FORCE APPLIED TO THE Y VELOCIRY
             character.characterController.Move(yVelocity * Time.deltaTime);
-           
+            
         }
 
         protected void HandleGroundCheck()
