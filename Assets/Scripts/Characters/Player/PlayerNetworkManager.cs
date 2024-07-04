@@ -11,6 +11,10 @@ namespace TK
         PlayerManager player;
         public NetworkVariable<FixedString64Bytes> characterName = new NetworkVariable<FixedString64Bytes>("Character", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+        [Header("Equiment")]
+        public NetworkVariable<int> currentRightHandWeaponID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<int> currentLeftHandWeaponID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
         protected override void Awake()
         {
             base.Awake();
@@ -27,6 +31,20 @@ namespace TK
             maxStamina.Value = player.playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(newEndurance);
             PlayerUIManager.instance.playerUiHudManager.SetMaxStaminaValue(maxStamina.Value);
             currentStamina.Value = maxStamina.Value;
+        }
+
+        public void OnCurrentRightHandWeaponIDChange(int oldID, int newID)
+        {
+            WeaponItem newWeapon = Instantiate(WorldItemDatabase.instance.GetWeaponByID(newID));
+            player.playerInventoryManager.currentRightHandWeapon = newWeapon;
+            player.playerEquipmentManager.LoadRightWeapon();
+        }
+
+        public void OnCurrentLeftHandWeaponIDChange(int oldID, int newID)
+        {
+            WeaponItem newWeapon = Instantiate(WorldItemDatabase.instance.GetWeaponByID(newID));
+            player.playerInventoryManager.currentLeftHandWeapon = newWeapon;
+            player.playerEquipmentManager.LoadLeftWeapon();
         }
     }
 }

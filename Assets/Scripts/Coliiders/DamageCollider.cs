@@ -6,6 +6,9 @@ namespace TK
 {
     public class DamageCollider : MonoBehaviour
     {
+        [Header("Collider")]
+        protected Collider damageCollider;
+
         [Header("Damage")]
         public float physicalDamage = 0; // (in the fure will be split into "standard", "Strile". "Slash" and "Pierce"
         public float magicDamage = 0;
@@ -57,6 +60,17 @@ namespace TK
             damageEffect.contactPoint = contactPoint;
 
             damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+        }
+
+        public virtual void EnableDamageCollider()
+        {
+            damageCollider.enabled = true;
+        }
+
+        public virtual void DisableDamageCollider()
+        {
+            damageCollider.enabled = false;
+            characterDamaged.Clear(); // WE RESET THE CHARACTERS THAT HAVE BEEN HT WHEN WE RESET THE COLLIDER, SO THEY MAY BE HIT AGAIN
         }
     }   
 
