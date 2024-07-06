@@ -63,7 +63,7 @@ namespace TK
         // DRAWS OUR GROUND CHECK SPHERE IN SCENE VIEW
        protected void OnDrawGizmosSelected()
         {
-            Gizmos.DrawSphere(character.transform.position, groundCheckSphereRaidus);
+            //Gizmos.DrawSphere(character.transform.position, groundCheckSphereRaidus);
         }
     }
 

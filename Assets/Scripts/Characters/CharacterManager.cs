@@ -37,6 +37,11 @@ namespace TK
             characterAnimatorManager = GetComponent<CharacterAnimatorManager>();    
         }
 
+        protected virtual void Start()
+        {
+            IngnoreMyOwnColliders();
+        }
+
         protected virtual void Update()
         {
             
@@ -97,6 +102,32 @@ namespace TK
         public virtual void ReviveCharacter()
         {
 
+        }
+
+        protected virtual void IngnoreMyOwnColliders()
+        {
+            Collider characterControllerCollider = GetComponent<Collider>();
+            Collider[] damageableCharacterColliders = GetComponentsInChildren<Collider>();
+
+            List<Collider> ignoreColliders = new List<Collider>();
+
+            // ADDS ALL OF OUR DAMAGEABLE CHARACTER COLLIDERS, TO THE LIST THAT WILL BE USED TO IGNORE COLLISIONS
+            foreach(var collider in damageableCharacterColliders)
+            {
+                ignoreColliders.Add(collider);
+            }
+
+            // ADDS OUR CHARACTER CONTROLLDER COLLIDER TO THE LIST THAT WILL BE USED TO IGNORE COLLISIONS
+            ignoreColliders.Add(characterControllerCollider);
+            
+            // GOES THROUGH EVERY COLLIDER ON THE LIST, AND IGNORES COLLISION WITH EACH OTHER
+            foreach(var collider in ignoreColliders)
+            {
+                foreach (var otherCollider in ignoreColliders)
+                {
+                    Physics.IgnoreCollision(collider, otherCollider, true);
+                }
+            }
         }
     }
 }

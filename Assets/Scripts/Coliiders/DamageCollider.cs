@@ -24,8 +24,10 @@ namespace TK
         protected List<CharacterManager> characterDamaged = new List<CharacterManager>();
         private void OnTriggerEnter(Collider other)
         {
-            CharacterManager damageTarget = other.GetComponent<CharacterManager>();
+            CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
+            // IF YOU WANT TO SEARCH ON BOTH THE DAMAGEABLE CHARACTER COLLIDERS & THE CHARACTER CONTROLLER JUST FOR NULL HERE AND DO THE FOLLOWING
 
+           
             if (damageTarget != null)
             {
                 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
