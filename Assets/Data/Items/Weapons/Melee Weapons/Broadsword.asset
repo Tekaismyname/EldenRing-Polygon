@@ -24,7 +24,7 @@ MonoBehaviour:
   dexREQ: 10
   intREQ: 0
   faithREQ: 0
-  physicalDamage: 75
+  physicalDamage: 90
   fireDamage: 0
   magicDamage: 0
   holyDamage: 0
@@ -32,3 +32,4 @@ MonoBehaviour:
   gravityDamage: 0
   poseDamage: 20
   baseStaminaCost: 20
+  oh_RB_Action: {fileID: 0}

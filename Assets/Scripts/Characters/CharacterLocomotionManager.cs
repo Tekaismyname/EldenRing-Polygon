@@ -39,7 +39,7 @@ namespace TK
             else
             {
                 // IF NOT JUMP OR FALLING VERLOCITY HAS NOT BEN SET
-                if(!character.isJumping && !fallingVelocityHasBeenSet) 
+                if(!character.characterNetworkManager.isJumping.Value && !fallingVelocityHasBeenSet) 
                 {
                     fallingVelocityHasBeenSet= true;
                     yVelocity.y = fallStartYVelocity;
@@ -53,7 +53,7 @@ namespace TK
 
             // IF THERE SHOULD ALWAYS BE SOME FORCE APPLIED TO THE Y VELOCIRY
             character.characterController.Move(yVelocity * Time.deltaTime);
-            
+            Debug.Log("Y Velocity: " + yVelocity);
         }
 
         protected void HandleGroundCheck()

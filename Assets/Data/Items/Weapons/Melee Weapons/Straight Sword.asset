@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: 'A Straight Sword
 
 '
-  itemID: 0
+  itemID: 1
   weaponModel: {fileID: 2006980660916883956, guid: a73e0c5d59b069143a0b09c106e0e7d6,
     type: 3}
   strREQ: 10
@@ -30,5 +30,6 @@ MonoBehaviour:
   holyDamage: 0
   lightningDamage: 0
   gravityDamage: 0
-  poseDamage: 20
+  poseDamage: 15
   baseStaminaCost: 20
+  oh_RB_Action: {fileID: 11400000, guid: 0a3ef6637bdc69b44af7451301142ceb, type: 2}

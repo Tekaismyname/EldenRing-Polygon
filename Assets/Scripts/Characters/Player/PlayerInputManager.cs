@@ -27,6 +27,7 @@ namespace TK {
         [SerializeField] bool dodgeInput = false;
         [SerializeField] bool sprintInput = false;
         [SerializeField] bool jumpInput = false;
+        [SerializeField] bool RB_Input = false;
 
         private void Awake()
         {
@@ -47,7 +48,11 @@ namespace TK {
             //WHEN THE SCENE CHANGE, RUN THIS LOGIC 
             SceneManager.activeSceneChanged += OnSceneChange;
 
-            instance.enabled = false;    
+            instance.enabled = false;
+            if(playerControls != null)
+            {
+                playerControls.Disable();
+            }
         }
         private void Update()
         {
@@ -59,6 +64,11 @@ namespace TK {
             if(newScene.buildIndex == WorldSaveGameManager.instance.getWorldIndex())
             {
                 instance.enabled = true;
+
+                if (playerControls != null)
+                {
+                    playerControls.Disable();
+                }
             }
             // OTHERWISE WE MUST BE AT THE MAIN MENU, DISABLE OUR PLAYER CONTROLS
             // THIS IS SO OUR PLAYER CANT MOVE AROUND IF WE ENTER THING LIKE A CHARACTER CREATION MENU ETC
@@ -77,6 +87,7 @@ namespace TK {
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
                 playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+                playerControls.PlayerActions.RB.performed += i => RB_Input = true;
 
                 // HOLDING THE INPUT, SETS THE BOOL TO TRUE
                 playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -115,6 +126,7 @@ namespace TK {
             HandleDodgeInput();
             HandleSprintInput();
             HandleJumpInput();
+            HandleRBInput();
         }
         //  MOVEMENT
         private void HandlePlayerMovementInput()
@@ -188,6 +200,21 @@ namespace TK {
                 // ATTEMPT TO PERFORM JUMP
                 player.playerLocomotionManager.AttempToPerformJump();
             }    
+        }
+
+        private void HandleRBInput()
+        {
+            if(RB_Input)
+            {
+                RB_Input = false;
+                // IF WE HAVE A UI WINDOWN OPEN, RETURN AND DO NOTHING
+
+                player.playerNetworkManager.SetCharacterActionHand(true);
+
+                // TODO: IF WE ARE TWO HANDING THE WAEPON, USE THE TWO HANDED ACTION
+
+                player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RB_Action, player.playerInventoryManager.currentRightHandWeapon);
+            }
         }
     }
 }

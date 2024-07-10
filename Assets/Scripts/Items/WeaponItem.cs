@@ -42,11 +42,12 @@ namespace TK
         // LIGHT ATTACK STAMINA COST MODIFIER
         // HEAVY ATTACK STAMINA COST MODIFIER 
 
-        // ITEM BASED ACTIONS 
+        [Header("Actions")]
+        public WeaponItemAction oh_RB_Action; // ONE HAND RIGHT BUMPER ACTION
 
         // ASH OF WAR
 
         // BLOCKING SOUNDS
-        
+            
     }
 }

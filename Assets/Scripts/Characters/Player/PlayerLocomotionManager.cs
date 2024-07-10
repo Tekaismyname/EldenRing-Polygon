@@ -110,7 +110,7 @@ namespace Tk
         }
         private void HandleJumpngMovement()
         {
-            if (player.isJumping)
+            if (player.characterNetworkManager.isJumping.Value)
             {
                 player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
             }
@@ -215,12 +215,12 @@ namespace Tk
             // IF WE ARE OUT OF STAMINA, WE DO NOT WISH TO ALLOW A JUMP
             if (player.playerNetworkManager.currentStamina.Value <= 0) return;
             // IF WE ARE ALREADY IN A JUMP, WE DO NOT WANT TO ALLOW A JUMP AGAIN UNTILL THE CURRENT HUMP HAS FINISHED
-            if (player.isJumping) return;
+            if (player.characterNetworkManager.isJumping.Value) return;
             // IF WE ARE NOT GROUNDED, WE DO NOT WANT TO ALLOW A JUMP
             if (!player.isGrounded) return;
             // IF WE ARE TWO HANDING OUR WEAPON, PLAY THE TWO HANDED JUMP ANIMATION, OTHERWISE PLAY THE ONE HANDED ANIMATION ( TO DO )
             player.playerAnimatorManager.PlayerTargetActionAnimation("Main_Jump_Start_01", false);
-            player.isJumping = true;
+            player.characterNetworkManager.isJumping.Value = true;
             player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
 
             jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
