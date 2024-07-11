@@ -49,6 +49,28 @@ namespace TK
             character.characterNetworkManager.NotifyTheSeverOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
             Debug.Log("Local Client ID: " + NetworkManager.Singleton.LocalClientId);
         }
+
+        public virtual void PlayerTargetAttackActionAnimation(string targetAnimation,
+                                                       bool isPerforming,
+                                                       bool applyRootMotion = true,
+                                                       bool canRotate = false,
+                                                       bool canMove = false)
+        {
+            // KEEP TRACK OF LAST ATTACK PERFORMED ( FOR COMBOS )
+            // KEEP TRACK OF CURRENT ATTACK TYUPE (LIGHT, HEAVY, ETC)
+            // UPDATE ANIMATOR SET TO CURRENT WEAPONS ANIMATIONS
+            // DECIDE IF OUR ATTACK CAN BE PARRIED
+            // TELL THE NETWORK OUR "ATTACKING" FLAG IS ACTIVE ( FOR COUNTER DAMANAGE ETC)
+            character.applyRootMotion = applyRootMotion;
+            character.animator.CrossFade(targetAnimation, 0.2f);
+            character.isPerformingAction = isPerforming;
+            character.canMove = canMove;
+            character.canRotate = canRotate;
+
+            // TELL THE SERVER/HOST WE PLAYED AN ANIMATION, AND TO PLAY THAT ANIMATION FOR EVERYBODY ELSE PRESENT
+            character.characterNetworkManager.NotifyTheSeverOfAttackActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
+            Debug.Log("Local Client ID: " + NetworkManager.Singleton.LocalClientId);
+        }
     }
 }
 

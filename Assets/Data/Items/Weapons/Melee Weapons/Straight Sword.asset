@@ -32,4 +32,4 @@ MonoBehaviour:
   gravityDamage: 0
   poseDamage: 15
   baseStaminaCost: 20
-  oh_RB_Action: {fileID: 11400000, guid: 0a3ef6637bdc69b44af7451301142ceb, type: 2}
+  oh_RB_Action: {fileID: 11400000, guid: f66db7a0dcb998c43a9ad4d8f0d7916f, type: 2}

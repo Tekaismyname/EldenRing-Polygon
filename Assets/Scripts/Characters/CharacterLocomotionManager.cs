@@ -19,7 +19,7 @@ namespace TK
         protected float inAirTimer = 0;
         protected virtual void Awake()
         {
-            character = GetComponent<CharacterManager>();
+            character = gameObject.GetComponent<CharacterManager>();
         }
 
         protected virtual void Update()

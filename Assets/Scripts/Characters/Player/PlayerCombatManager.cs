@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 namespace TK
 {
@@ -18,9 +19,13 @@ namespace TK
         public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponItem weaponPerformingAction)
         {
             // PERFORM THE ACTION
-            weaponAction.AttempToPerformAction(player, weaponPerformingAction);
+            if (player.IsOwner)
+            {
+                weaponAction.AttempToPerformAction(player, weaponPerformingAction);
 
-            // NOTIFY THE SEVER WE HAVE PERFOMED THE ACTION, SO WE PERFORM IT FROM THERE PERSPECTIVE ALSO
+                // NOTIFY THE SEVER WE HAVE PERFOMED THE ACTION, SO WE PERFORM IT FROM THERE PERSPECTIVE ALSO
+                player.playerNetworkManager.NotifyTheSeverOfWeaponActionServerRpc(NetworkManager.Singleton.LocalClientId, weaponAction.actionID, weaponPerformingAction.itemID);
+            }
         }
 
         

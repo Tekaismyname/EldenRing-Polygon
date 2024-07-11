@@ -70,5 +70,40 @@ namespace TK
             player.playerCombatManager.currentWeaponBeingUsed = newWeapon;
 
         }
+
+        // ITEM ACTIONS
+        [ServerRpc]
+
+        public void NotifyTheSeverOfWeaponActionServerRpc(ulong clientID, int actionID, int weaponID)
+        {
+            if(IsServer)
+            {
+                NotifyTheSeverOfWeaponActionClientRpc(clientID, actionID, weaponID);
+            }
+        }
+
+        [ClientRpc]
+        public void NotifyTheSeverOfWeaponActionClientRpc(ulong clientID, int actionID, int weaponID)
+        {
+            // WE DO NOT PLAY THE ACTION AGAIN FOR THE CHARACTER WHO CALLED IT BECAUSE THEY ALREADY OPLAYED IT LOCALLY
+            if(clientID != NetworkManager.Singleton.LocalClientId)
+            {
+                PerformWeaponBasedAction(actionID, weaponID);
+            }
+        }
+
+        private void PerformWeaponBasedAction(int actionID, int weaponID)
+        {
+            WeaponItemAction weaponAction = WorldActionManager.instance.GetWeaponItemActionByID(actionID);
+
+            if(weaponAction != null)
+            {
+                weaponAction.AttempToPerformAction(player, WorldItemDatabase.instance.GetWeaponByID(weaponID));
+            }
+            else
+            {
+                Debug.Log("ACTION IS NULL, CANNOT BE PERFORMED");
+            }
+        }
     }
 }
