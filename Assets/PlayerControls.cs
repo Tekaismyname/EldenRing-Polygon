@@ -265,8 +265,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9bafadf3-5ae3-4cc1-b5f8-450d4ddf9844"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": ""Hold"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RB"",

@@ -84,6 +84,8 @@ namespace TK
 
         }
 
+
+        // ATTACK ANIMATION
         [ServerRpc]
         public void NotifyTheSeverOfAttackActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
         {
@@ -94,7 +96,6 @@ namespace TK
             }
         }
 
-        // A CLIENT RPC IS SENT TO ALL CLIENTS PRESENT, FROM THE SERVER 
         [ClientRpc]
         public void PlayActionAttackAnimationForAllClientClientRpc(ulong clientID, string animationID, bool applyRootMotion)
         {
@@ -110,6 +111,84 @@ namespace TK
             character.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(animationID, 0.2f);
 
+        }
+
+        // DAMAGE 
+        [ServerRpc(RequireOwnership = false)]
+        public void NotifyTheSeverOfCharacterDamageServerRpc(
+            ulong damagedCharacterID,
+            ulong characterCausingDamageID,
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float gravityDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)
+        {
+            if (IsServer)
+            {
+                NotifyTheSeverOfCharacterDamageClientRpc(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, lightningDamage, holyDamage, gravityDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+            }
+        }
+
+        [ClientRpc]
+        public void NotifyTheSeverOfCharacterDamageClientRpc(
+            ulong damagedCharacterID,
+            ulong characterCausingDamageID,
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float gravityDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)
+        {
+            ProcessCharacterDamageFromSever(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, lightningDamage, holyDamage, gravityDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+
+        }
+
+        public void ProcessCharacterDamageFromSever(
+            ulong damagedCharacterID,
+            ulong characterCausingDamageID,
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float gravityDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)
+        {
+            CharacterManager damagedCharacter = NetworkManager.Singleton.SpawnManager.SpawnedObjects[damagedCharacterID].gameObject.GetComponent<CharacterManager>();
+            CharacterManager characterCausingDamage = NetworkManager.Singleton.SpawnManager.SpawnedObjects[characterCausingDamageID].gameObject.GetComponent<CharacterManager>();
+
+
+            TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
+
+            damageEffect.physicalDamage = physicalDamage;
+            damageEffect.magicDamage = magicDamage;
+            damageEffect.fireDamage = fireDamage;
+            damageEffect.lightningDamage = lightningDamage;
+            damageEffect.holyDamage = holyDamage;
+            damageEffect.gravityDamage = gravityDamage;
+            damageEffect.poiseDamage= poiseDamage;
+            damageEffect.angleHitFrom = angleHitFrom;
+            damageEffect.contactPoint = new Vector3(contactPointX, contactPointY, contactPointZ);
+            damageEffect.characterCausingDamage = characterCausingDamage;
+
+            damagedCharacter.characterEffectsManager.ProcessInstantEffect(damageEffect);
         }
     }
 }

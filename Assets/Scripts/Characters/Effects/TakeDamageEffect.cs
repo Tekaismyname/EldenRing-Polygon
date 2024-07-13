@@ -66,6 +66,7 @@ namespace TK
         private void CalculateDamage(CharacterManager character)
         {
             if(!character.IsOwner) return;
+
             if(characterCausingDamage != null)
             {
                 // CHECK FOR DAMAGE MODIFIERS AND MODIFY BASE DAMAGE (PHYSICAL/ELEMENTTAL DAMAGE BUFF)   

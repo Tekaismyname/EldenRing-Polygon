@@ -45,13 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8ce95c41c2c0642a73cae3cbaaa451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCollider: {fileID: 7726496740894275319}
   physicalDamage: 0
   magicDamage: 0
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
   gravityDamage: 0
+  contactPoint: {x: 0, y: 0, z: 0}
   characterCausingDamage: {fileID: 0}
+  light_Attack_01_Modifier: 0
 --- !u!135 &7726496740894275319
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -108,7 +111,7 @@ GameObject:
   - component: {fileID: 1193993673679293262}
   - component: {fileID: 7300337738602663604}
   m_Layer: 0
-  m_Name: Unarmed
+  m_Name: Weapon_Unarmed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcdcbc0133b3443448d248925d7da6c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meleeDamageCollider: {fileID: 0}
 --- !u!1 &3547175977470841841
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ namespace TK
 {
     public class WeaponManager : MonoBehaviour
     {
-        MeleeWeaponDamageCollider meleeDamageCollider;
+        public MeleeWeaponDamageCollider meleeDamageCollider;
 
         private void Awake()
         {
@@ -22,6 +22,8 @@ namespace TK
             meleeDamageCollider.lightningDamage= weapon.lightningDamage;
             meleeDamageCollider.holyDamage= weapon.holyDamage;
             meleeDamageCollider.gravityDamage= weapon.gravityDamage;
+
+            meleeDamageCollider.light_Attack_01_Modifier = weapon.light_Attack_01_Modifier;
         }
     }
 

@@ -50,7 +50,8 @@ namespace TK
             Debug.Log("Local Client ID: " + NetworkManager.Singleton.LocalClientId);
         }
 
-        public virtual void PlayerTargetAttackActionAnimation(string targetAnimation,
+        public virtual void PlayerTargetAttackActionAnimation( AttackType attackType,
+                                                       string targetAnimation,
                                                        bool isPerforming,
                                                        bool applyRootMotion = true,
                                                        bool canRotate = false,
@@ -61,6 +62,7 @@ namespace TK
             // UPDATE ANIMATOR SET TO CURRENT WEAPONS ANIMATIONS
             // DECIDE IF OUR ATTACK CAN BE PARRIED
             // TELL THE NETWORK OUR "ATTACKING" FLAG IS ACTIVE ( FOR COUNTER DAMANAGE ETC)
+            character.characterCombatManager.currentAttackType= attackType;
             character.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
             character.isPerformingAction = isPerforming;

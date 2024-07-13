@@ -7,7 +7,7 @@ namespace TK
     public class DamageCollider : MonoBehaviour
     {
         [Header("Collider")]
-        protected Collider damageCollider;
+        [SerializeField] protected Collider damageCollider;
 
         [Header("Damage")]
         public float physicalDamage = 0; // (in the fure will be split into "standard", "Strile". "Slash" and "Pierce"
@@ -18,11 +18,17 @@ namespace TK
         public float gravityDamage = 0;
 
         [Header("Contact Point")]
-        private Vector3 contactPoint;
+        public Vector3 contactPoint;
 
         [Header("Characters Damaged")]
         protected List<CharacterManager> characterDamaged = new List<CharacterManager>();
-        private void OnTriggerEnter(Collider other)
+
+        protected virtual void Awake()
+        {
+
+        }
+
+        protected virtual void OnTriggerEnter(Collider other)
         {
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
             // IF YOU WANT TO SEARCH ON BOTH THE DAMAGEABLE CHARACTER COLLIDERS & THE CHARACTER CONTROLLER JUST FOR NULL HERE AND DO THE FOLLOWING
