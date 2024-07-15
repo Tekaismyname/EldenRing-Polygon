@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Tk;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 namespace TK
 {
@@ -66,6 +67,7 @@ namespace TK
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
             // IF THIS THE PLAYER OBJECT OWNED BY THIS CLIENT
             if(IsOwner)
             {
@@ -97,7 +99,24 @@ namespace TK
                 LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.instance.currentCharacterData);
             }
         }
+        private void OnClientConnectedCallback(ulong clientID)
+        {
+            // KEEP A LIST OF ACTIVE PLAYERS IN THE GAME
+            WorldGameSessionManager.instance.AddPlayerToActivePlayersList(this);
 
+            // IF WE ARE THE SERVER, WE ARE THE HOST, SO WE DONT NEED TO LOAD PLAYERS TO SYNC THEM 
+            // YOU ONLY NEED TO LOAD OTHER PLAYERS GEAR TO SYNC IT IF YOU JOIN A GAME THATS ALREADY BEEN ACTIVE WITHOUT YOU BEING PRESENT
+            if(!IsServer && IsOwner)
+            {
+                foreach(var player in WorldGameSessionManager.instance.players)
+                {
+                    if(player != this)
+                    {
+                        player.LoadOtherPlayerCharacterWhenJoiningServer();
+                    }
+                }
+            }
+        }
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
 
@@ -155,6 +174,15 @@ namespace TK
             PlayerUIManager.instance.playerUiHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
 
 
+        }
+
+        private void LoadOtherPlayerCharacterWhenJoiningServer()
+        {
+            // SYNC WEAPON
+            playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
+            playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+
+            // ARMOOR
         }
         private void DebugMenu()
         {

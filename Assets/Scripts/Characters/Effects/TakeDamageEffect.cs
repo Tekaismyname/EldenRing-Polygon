@@ -57,7 +57,9 @@ namespace TK
             // PLAY A DAMAGE ANIMATION
             // CHECK FOR BUILD UPS (POISE, BLEED ECT)
             // PLAY DAMAGE SOUND FX
+            PlayDamageSFX(character);
             // PLAYE DAMAGE VFX (BLOOD)
+            PlayDamageVFX(character);
 
             // IF CHARACTER IS A.I CHECK FOR NEW TARGET IF CHARACTER CAUSING DAMAGE IS PRESENT
 
@@ -87,6 +89,23 @@ namespace TK
             character.characterNetworkManager.currentHealth.Value -= finalDamageDealt;
 
             // CACULATE POSE DAMAGE TO DETERMINE IF THE CHARACTER WILL BE STUNNED
+        }
+
+        private void PlayDamageVFX(CharacterManager character)
+        {
+            // IF WE HAVE FIRE DAMAGE, PLAY FIRE PARTICLES
+            // LIGHTNING DAMAGE, LIGHTNING PARTICLES ECT
+
+            character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
+        }
+
+        private void PlayDamageSFX(CharacterManager character)
+        {
+            AudioClip physicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSGXFromArray(WorldSoundFXManager.instance.physicalDamageSFX);
+
+            character.characterSoundFXManager.PlaySoundFX(physicalDamageSFX);
+            // IF FIRE DAMAGHE IS GREATER THAN O, PLAY BURN SFX
+            // IF LIGHTNING DMAAGE IS GREATER THAN 0, PLAY ZAP SFX
         }
     }
 

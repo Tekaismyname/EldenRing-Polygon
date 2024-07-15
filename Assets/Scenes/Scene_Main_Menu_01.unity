@@ -4304,6 +4304,25 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1818240089 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5357812530460682962, guid: 506474bf4bc7eeb4e8bd705ff59b66be,
+    type: 3}
+  m_PrefabInstance: {fileID: 5357812531910961818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1818240093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818240089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f989f04d842172349861c88a2a1f4114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
 --- !u!224 &1932808101 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4787024999814485034, guid: 00a2f9aea92e08c41917db3d5cbecf4e,
@@ -6060,5 +6079,20 @@ PrefabInstance:
       propertyPath: rollSFX
       value: 
       objectReference: {fileID: 8300000, guid: f7a076a9354ab8c468416832941e870a, type: 3}
+    - target: {fileID: 8209498738341174986, guid: 4f0c30af0319c714692fd9dce66e9e52,
+        type: 3}
+      propertyPath: physicalDamageSFX.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209498738341174986, guid: 4f0c30af0319c714692fd9dce66e9e52,
+        type: 3}
+      propertyPath: physicalDamageSFX.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7cbd6cd765888ff418d01d98bd1ce9c2, type: 3}
+    - target: {fileID: 8209498738341174986, guid: 4f0c30af0319c714692fd9dce66e9e52,
+        type: 3}
+      propertyPath: physicalDamageSFX.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3df9bbbc130ccb344af5f3fc793a630f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f0c30af0319c714692fd9dce66e9e52, type: 3}
