@@ -55,6 +55,7 @@ namespace TK
             CalculateDamage(character);
             // CHECK WHICH DIRECTIONAL DAMAGE CAME FROM 
             // PLAY A DAMAGE ANIMATION
+            PlayDirectionalBasedDamageAnimation(character);
             // CHECK FOR BUILD UPS (POISE, BLEED ECT)
             // PLAY DAMAGE SOUND FX
             PlayDamageSFX(character);
@@ -106,6 +107,41 @@ namespace TK
             character.characterSoundFXManager.PlaySoundFX(physicalDamageSFX);
             // IF FIRE DAMAGHE IS GREATER THAN O, PLAY BURN SFX
             // IF LIGHTNING DMAAGE IS GREATER THAN 0, PLAY ZAP SFX
+        }
+
+        private void PlayDirectionalBasedDamageAnimation(CharacterManager character)
+        { 
+            if(!character.IsOwner) return;
+            // TODO CALCULATE IF POISE IS BROKEN
+            poiseIsBroken = true;
+
+            if(angleHitFrom >= 145 && angleHitFrom <= 180)
+            {
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
+            }
+            else if (angleHitFrom <= -145 && angleHitFrom >= -180)
+            {
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
+            }
+            else if (angleHitFrom >= -45 && angleHitFrom <= 45)
+            {
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.backward_Medium_Damage);
+            }
+            else if (angleHitFrom >= -144 && angleHitFrom <= -45)
+            {
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.left_Medium_Damage);
+            }
+            else if (angleHitFrom >= 45 && angleHitFrom <= 144)
+            {
+                damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.right_Medium_Damage);
+            }
+
+            // IF POISE IS BROKEN, PLAY A STAGGERING DAMAGE ANIMATON
+            if (poiseIsBroken)
+            {
+                character.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
+                character.characterAnimatorManager.PlayerTargetActionAnimation(damageAnimation, true);
+            }
         }
     }
 
